@@ -1,5 +1,23 @@
+import { prisma } from "@/lib/prisma";
+import { redirect } from "next/navigation";
 
 const Create = () => {
+
+  async function createSnippet(formData: FormData) {
+    "use server";
+    const title = formData.get("title") as string;
+    const code = formData.get("code") as string;
+
+     await prisma.snippets.create({
+      data: {
+        title,
+        code
+      }
+    })
+
+  redirect("/")    
+  }
+  
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
 
@@ -11,7 +29,7 @@ const Create = () => {
         </h1>
 
         {/* Form */}
-        <form className="space-y-4">
+        <form action={createSnippet} className="space-y-4">
           
           {/* Title Input */}
           <div>
@@ -19,6 +37,7 @@ const Create = () => {
               Title
             </label>
             <input
+              name="title"
               type="text"
               placeholder="Enter title..."
               className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -31,6 +50,7 @@ const Create = () => {
               Code
             </label>
             <textarea
+              name="code"
               placeholder="Enter your code..."
               rows={5}
               className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
