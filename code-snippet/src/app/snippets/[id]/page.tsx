@@ -2,6 +2,7 @@
 import { deleteSnippet } from "@/actions/actions";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 const SingleSnippet = async ({ params }: { params: { id: string } }) => {
   const id = parseInt((await params).id); // ✅ no await here
@@ -12,7 +13,7 @@ const SingleSnippet = async ({ params }: { params: { id: string } }) => {
   });
 
   if (!snippet) {
-    return <div className="text-center mt-10 text-red-500">Snippet not found!</div>;
+    return notFound()
   }
 
   const deleteSnippetAction = deleteSnippet.bind(null, id);
