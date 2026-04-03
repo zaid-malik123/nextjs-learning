@@ -1,7 +1,30 @@
+"use client"
 import { createSnippet } from "@/actions/actions";
+import { useActionState, useState } from "react";
 
 
 const Create = () => {
+
+
+  const [error, setError] = useState < string | null>(null);
+
+  const formData = async (formData: FormData) => {
+
+
+    const res = await createSnippet(formData)
+
+    if(!res.success) {
+
+      setError(res.message as string)
+    }
+
+    else {
+      setError(error)
+      window.location.href = "/";
+    }
+  }
+
+
   
   
   return (
@@ -15,7 +38,7 @@ const Create = () => {
         </h1>
 
         {/* Form */}
-        <form action={createSnippet} className="space-y-4">
+        <form action={formData} className="space-y-4">
           
           {/* Title Input */}
           <div>
@@ -42,7 +65,7 @@ const Create = () => {
               className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-
+          <p className="py-3 text-red-500 text-md font-semibold">{error}</p>
           {/* Button */}
           <button
             type="submit"
