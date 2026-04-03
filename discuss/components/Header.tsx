@@ -1,7 +1,10 @@
 import { handleSignOut } from "@/app/actions/SignOut";
 import { handleSignIn } from "@/app/actions/Singin";
+import { auth } from "@/auth";
 
-export default function Header() {
+export default async function Header() {
+  const session = await auth();
+
   return (
     <header className="w-full border-b border-zinc-800 bg-black text-white">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
@@ -43,18 +46,46 @@ export default function Header() {
         </div>
 
         {/* Buttons */}
+        {/* Buttons / User */}
         <div className="flex items-center gap-3">
-          <form action={handleSignIn}>
-            <button className="rounded-2xl border border-white/20 px-5 py-2.5 text-sm font-medium text-white transition hover:border-white hover:bg-white hover:text-black">
-            Sign In
-          </button>
-          </form>
+          {!session?.user ? (
+            <>
+              <form action={handleSignIn}>
+                <button className="rounded-2xl border border-white/20 px-5 py-2.5 text-sm font-medium text-white transition hover:border-white hover:bg-white hover:text-black">
+                  Sign In
+                </button>
+              </form>
 
-         <form action={handleSignOut}>
-           <button className="rounded-2xl bg-white px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-zinc-200">
-            Sign Up
-          </button>
-         </form>
+              <button className="rounded-2xl bg-white px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-zinc-200">
+                Sign Up
+              </button>
+            </>
+          ) : (
+            <div className="relative group">
+              {/* Profile Image */}
+              <img
+                src={session.user.image ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzaXZJACO1kxvhfwMeJG6nO-7Pt3uk2HnkhA&s"}
+                alt="user"
+                className="h-10 w-10 rounded-full border border-white/20 cursor-pointer"
+              />
+
+              {/* Dropdown */}
+              <div className="absolute right-0 mt-3 w-48 rounded-xl border border-zinc-700 bg-zinc-900 p-3 shadow-lg opacity-0 invisible group-hover:visible group-hover:opacity-100 transition">
+                <p className="text-sm font-medium text-white">
+                  {session.user.name}
+                </p>
+                <p className="text-xs text-zinc-400 mb-3">
+                  {session.user.email}
+                </p>
+
+                <form action={handleSignOut}>
+                  <button className="w-full rounded-lg bg-white px-3 py-2 text-sm font-medium text-black hover:bg-zinc-200">
+                    Logout
+                  </button>
+                </form>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </header>
