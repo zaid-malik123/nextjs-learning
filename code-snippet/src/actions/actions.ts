@@ -13,3 +13,22 @@ export const deleteSnippet = async (id: number | undefined) => {
   redirect("/")
 
 }
+
+export async function createSnippet(formData: FormData) {
+    "use server";
+    const title = formData.get("title") as string;
+    const code = formData.get("code") as string;
+
+    if(!title || !code) {
+      throw new Error("Title and code are required")
+    }
+
+     await prisma.snippets.create({
+      data: {
+        title,
+        code
+      }
+    })
+
+  redirect("/")    
+  }

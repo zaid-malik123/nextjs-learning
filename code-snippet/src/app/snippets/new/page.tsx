@@ -1,22 +1,8 @@
-import { prisma } from "@/lib/prisma";
-import { redirect } from "next/navigation";
+import { createSnippet } from "@/actions/actions";
+
 
 const Create = () => {
-
-  async function createSnippet(formData: FormData) {
-    "use server";
-    const title = formData.get("title") as string;
-    const code = formData.get("code") as string;
-
-     await prisma.snippets.create({
-      data: {
-        title,
-        code
-      }
-    })
-
-  redirect("/")    
-  }
+  
   
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
