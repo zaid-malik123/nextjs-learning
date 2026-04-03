@@ -8,7 +8,7 @@ if(!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET){
     throw new Error("The secret is missing in the Auth.ts file.")
 }
 
-export const {handlers: {GET, POST}} = NextAuth({
+export const {handlers: {GET, POST}, auth, signIn, signOut} = NextAuth({
   adapter: PrismaAdapter(prisma),  
   providers: [
     GoogleProvider({
