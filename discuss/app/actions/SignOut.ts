@@ -1,12 +1,7 @@
 "use server"
 
-import *  as auth from "@/auth"
+import { signOut } from "next-auth/react";
 
-export const signOut = async () => {
-
-    auth.signOut();
-
+export async function handleSignOut() {
+  await signOut();
 }
-
-
-

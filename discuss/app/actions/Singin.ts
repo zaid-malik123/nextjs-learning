@@ -1,12 +1,7 @@
 "use server"
 
-import *  as auth from "@/auth"
+import { signIn } from "@/auth";
 
-export const signIn = async () => {
-
-    auth.signIn();
-
+export async function handleSignIn() {
+  await signIn("google");
 }
-
-
-
