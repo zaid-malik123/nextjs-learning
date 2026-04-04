@@ -1,9 +1,10 @@
-import React from 'react'
+import TopicShowClient from "@/components/TopicShowClient";
 
-const TopicShowPage = () => {
-  return (
-    <div>TopicSlugPage</div>
-  )
-}
+const TopicShowPage = async ({ params }: { params: { slug: string } }) => {
+  const id = (await params).slug;
 
-export default TopicShowPage
+
+  return <TopicShowClient id={id} />;
+};
+
+export default TopicShowPage;
