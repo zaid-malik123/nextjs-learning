@@ -7,7 +7,6 @@ const TopicShowClient = ({ id }: { id: string }) => {
   const [open, setOpen] = useState(false);
   return (
     <div>
-      <div className="text-white text-2xl text-center">{id}</div>
 
       <button
         onClick={() => setOpen(true)}
