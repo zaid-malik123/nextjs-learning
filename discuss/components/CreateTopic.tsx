@@ -1,5 +1,6 @@
+"use client"
 import { createTopic } from "@/actions/create-topic";
-import React from "react";
+import React, { useActionState } from "react";
 
 type Props = {
   open: boolean;
@@ -7,6 +8,8 @@ type Props = {
 };
 
 const CreateTopic = ({ open, setOpen }: Props) => {
+
+  const [formState, action] = useActionState(createTopic, {errors: {}})
   return (
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
       {/* MODAL BOX */}
@@ -23,7 +26,7 @@ const CreateTopic = ({ open, setOpen }: Props) => {
         </div>
 
         {/* FORM */}
-        <form action={createTopic} className="flex flex-col gap-4">
+        <form action={action} className="flex flex-col gap-4">
           {/* NAME */}
           <input
             name="name"
@@ -31,6 +34,7 @@ const CreateTopic = ({ open, setOpen }: Props) => {
             placeholder="Topic Name"
             className="w-full rounded-xl bg-zinc-800 border border-zinc-700 px-4 py-2 outline-none focus:border-white"
           />
+          {formState.errors.name && <p className="text-red-600 text-md mt-1 mb-1">{formState.errors.name}</p>}
 
           {/* DESCRIPTION */}
           <textarea
@@ -39,6 +43,10 @@ const CreateTopic = ({ open, setOpen }: Props) => {
             rows={4}
             className="w-full rounded-xl bg-zinc-800 border border-zinc-700 px-4 py-2 outline-none focus:border-white resize-none"
           />
+
+          {formState.errors.description && <p className="text-red-600 text-md mt-1 mb-1">{formState.errors.description}</p>}
+
+          {formState.errors.formError && <div className="text-white text-md mt-1 mb-1 text-center bg-red-300 py-3">{formState.errors.formError}</div>}
 
           {/* BUTTONS */}
           <div className="flex justify-end gap-3 mt-2">
