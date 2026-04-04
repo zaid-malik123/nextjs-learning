@@ -26,10 +26,10 @@ const PostList = ({ posts }: { posts: PostWithData[] }) => {
 
       {posts.map((post) => (
         <Link
+          href=""
           key={post.id}
-          href={`/topics/${post.topic.slug}/posts/${post.id}`}
         >
-          <div className="bg-zinc-900 border border-zinc-700 rounded-2xl p-5 shadow-md hover:shadow-lg hover:border-white/30 transition cursor-pointer">
+          <div className="bg-zinc-900 border border-zinc-700 rounded-2xl p-5 shadow-md hover:shadow-lg hover:border-white/30 transition cursor-pointer mt-2">
 
             {/* TITLE */}
             <h2 className="text-xl font-semibold text-white mb-2 line-clamp-1">

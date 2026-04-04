@@ -29,3 +29,22 @@ export const fetchPostsByTopicSlug = async (
     },
   });
 };
+
+export const fetchTopPosts = async (): Promise< PostWithData[]> => {
+
+  return await prisma.post.findMany({
+    orderBy: [
+      {
+        comments: {
+          _count: "desc"
+        }
+      }
+    ],
+    include: {
+      topic: { select: { slug: true } },
+      _count: { select: { comments: true } },
+      user: { select: { name: true } },
+    },
+  })
+
+}
