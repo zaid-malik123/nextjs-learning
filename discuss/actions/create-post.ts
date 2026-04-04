@@ -85,5 +85,5 @@ export const createPost = async (
   }
     revalidatePath(`/topics/${slug}`);
 
-    redirect(`/topics/${slug}/${post.id}`);
+    redirect(`/topics/${slug}/posts/${post.id}`)
 };
